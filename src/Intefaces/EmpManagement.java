@@ -2,6 +2,8 @@ package Intefaces;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 
 import Execute.Employee;
@@ -21,8 +23,8 @@ public class EmpManagement extends JFrame{
     public EmpManagement() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530);
-        setMinimumSize(new Dimension(500, 530));
+        setBounds(0,0, 500, 530); // dimensiones iniciales
+        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -31,6 +33,21 @@ public class EmpManagement extends JFrame{
         });
 
         setVisible(true);
+        tfDate.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Main.onlyNumbers(e);
+                if (tfDate.getText().length() >= 4) {
+                    e.consume();
+                }
+            }
+        });
+        tfDoc.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Main.onlyNumbers(e);
+            }
+        });
     }
 
     private void registerEmployee() {
@@ -84,6 +101,7 @@ public class EmpManagement extends JFrame{
 
             statement.close();
             connection.close();
+            preparedStatement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
