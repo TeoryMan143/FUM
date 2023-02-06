@@ -2,6 +2,8 @@ package Intefaces;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.*;
@@ -28,9 +30,7 @@ public class EmpManagement extends JFrame{
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        btSend.addActionListener(e -> {
-            registerEmployee();
-        });
+        btSend.addActionListener(e -> registerEmployee());
 
         setVisible(true);
         tfDate.addKeyListener(new KeyAdapter() {
@@ -51,12 +51,12 @@ public class EmpManagement extends JFrame{
     }
 
     private void registerEmployee() {
-        String name = tfName.getText();
-        String lName = tfLname.getText();
-        String birthYear = tfDate.getText();
-        String email = tfEmail.getText();
-        String doc = tfDoc.getText();
-        String favDino = tfDinosaurrr.getText();
+        String name = tfName.getText().trim();
+        String lName = tfLname.getText().trim();
+        String birthYear = tfDate.getText().trim();
+        String email = tfEmail.getText().trim();
+        String doc = tfDoc.getText().trim();
+        String favDino = tfDinosaurrr.getText().trim();
 
         if (name.isEmpty() || lName.isEmpty() ||birthYear.isEmpty() ||email.isEmpty() ||doc.isEmpty() ||favDino.isEmpty() ) {
             JOptionPane.showMessageDialog(this, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
