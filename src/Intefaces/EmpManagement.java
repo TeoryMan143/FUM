@@ -1,15 +1,12 @@
 package Intefaces;
 
+import Execute.Employee;
+import Execute.Main;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.*;
-
-import Execute.Employee;
-import Execute.Main;
 
 public class EmpManagement extends JFrame{
     private JPanel pnMain;
@@ -79,20 +76,18 @@ public class EmpManagement extends JFrame{
 
     private Employee addEmpToDatabase(String name, String lName, String birthYear, String email, String doc, String favDino) {
         Employee employee = null;
-        final String DB_URL = "jdbc:mysql://localhost:3306/fum?serverTimezone=UTC";
-        final String USER = "root";
-        final String PASS = "123";
         try {
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = connection.createStatement();
-            String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            Statement statement = Main.connect().createStatement();
+            String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = Main.connect().prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lName);
             preparedStatement.setString(3, birthYear);
             preparedStatement.setString(4, email);
             preparedStatement.setString(5, doc);
             preparedStatement.setString(6, favDino);
+            int isActive = Integer.parseInt(birthYear) > 2005 ? 1 : 0;
+            preparedStatement.setString(7, String.valueOf(isActive));
 
             int addedRows = preparedStatement.executeUpdate();
             if (addedRows > 0) {
@@ -100,8 +95,8 @@ public class EmpManagement extends JFrame{
             }
 
             statement.close();
-            connection.close();
             preparedStatement.close();
+            Main.disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
