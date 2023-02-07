@@ -86,7 +86,7 @@ public class EmpManagement extends JFrame{
             preparedStatement.setString(4, email);
             preparedStatement.setString(5, doc);
             preparedStatement.setString(6, favDino);
-            int isActive = Integer.parseInt(birthYear) > 2005 ? 1 : 0;
+            int isActive = Integer.parseInt(birthYear) < 2005 ? 1 : 0;//ඞ
             preparedStatement.setString(7, String.valueOf(isActive));
 
             int addedRows = preparedStatement.executeUpdate();
