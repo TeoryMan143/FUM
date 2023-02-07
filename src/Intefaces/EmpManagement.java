@@ -1,11 +1,12 @@
 package Intefaces;
 
-import javax.swing.*;
-import java.awt.*;
-import java.sql.*;
-
 import Execute.Employee;
 import Execute.Main;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.*;
 
 public class EmpManagement extends JFrame{
     private JPanel pnMain;
@@ -21,25 +22,38 @@ public class EmpManagement extends JFrame{
     public EmpManagement() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530);
-        setMinimumSize(new Dimension(500, 530));
+        setBounds(0,0, 500, 530); // dimensiones iniciales
+        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        btSend.addActionListener(e -> {
-            registerEmployee();
-        });
+        btSend.addActionListener(e -> registerEmployee());
 
         setVisible(true);
+        tfDate.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Main.onlyNumbers(e);
+                if (tfDate.getText().length() >= 4) {
+                    e.consume();
+                }
+            }
+        });
+        tfDoc.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Main.onlyNumbers(e);
+            }
+        });
     }
 
     private void registerEmployee() {
-        String name = tfName.getText();
-        String lName = tfLname.getText();
-        String birthYear = tfDate.getText();
-        String email = tfEmail.getText();
-        String doc = tfDoc.getText();
-        String favDino = tfDinosaurrr.getText();
+        String name = tfName.getText().trim();
+        String lName = tfLname.getText().trim();
+        String birthYear = tfDate.getText().trim();
+        String email = tfEmail.getText().trim();
+        String doc = tfDoc.getText().trim();
+        String favDino = tfDinosaurrr.getText().trim();
 
         if (name.isEmpty() || lName.isEmpty() ||birthYear.isEmpty() ||email.isEmpty() ||doc.isEmpty() ||favDino.isEmpty() ) {
             JOptionPane.showMessageDialog(this, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
@@ -62,20 +76,18 @@ public class EmpManagement extends JFrame{
 
     private Employee addEmpToDatabase(String name, String lName, String birthYear, String email, String doc, String favDino) {
         Employee employee = null;
-        final String DB_URL = "jdbc:mysql://localhost:3306/fum?serverTimezone=UTC";
-        final String USER = "root";
-        final String PASS = "123";
         try {
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = connection.createStatement();
-            String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            Statement statement = Main.connect().createStatement();
+            String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = Main.connect().prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lName);
             preparedStatement.setString(3, birthYear);
             preparedStatement.setString(4, email);
             preparedStatement.setString(5, doc);
             preparedStatement.setString(6, favDino);
+            int isActive = Integer.parseInt(birthYear) > 2005 ? 1 : 0;
+            preparedStatement.setString(7, String.valueOf(isActive));
 
             int addedRows = preparedStatement.executeUpdate();
             if (addedRows > 0) {
@@ -83,7 +95,8 @@ public class EmpManagement extends JFrame{
             }
 
             statement.close();
-            connection.close();
+            preparedStatement.close();
+            Main.disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
