@@ -1,7 +1,7 @@
 package Intefaces;
 
 import Execute.Employee;
-import Execute.Main;
+import Execute.Utils;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -33,7 +33,7 @@ public class EmpManagement extends JFrame{
         tfDate.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Main.onlyNumbers(e);
+                Utils.onlyNumbers(e);
                 if (tfDate.getText().length() >= 4) {
                     e.consume();
                 }
@@ -42,7 +42,7 @@ public class EmpManagement extends JFrame{
         tfDoc.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
-                Main.onlyNumbers(e);
+                Utils.onlyNumbers(e);
             }
         });
     }
@@ -58,7 +58,7 @@ public class EmpManagement extends JFrame{
         if (name.isEmpty() || lName.isEmpty() ||birthYear.isEmpty() ||email.isEmpty() ||doc.isEmpty() ||favDino.isEmpty() ) {
             JOptionPane.showMessageDialog(this, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (!Main.isValidEmail(email)) {
+        } else if (!Utils.isValidEmail(email)) {
             JOptionPane.showMessageDialog(this, "Porfavor introduce un correo electronico valido", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -77,9 +77,9 @@ public class EmpManagement extends JFrame{
     private Employee addEmpToDatabase(String name, String lName, String birthYear, String email, String doc, String favDino) {
         Employee employee = null;
         try {
-            Statement statement = Main.connect().createStatement();
+            Statement statement = Utils.connect().createStatement();
             String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = Main.connect().prepareStatement(sql);
+            PreparedStatement preparedStatement = Utils.connect().prepareStatement(sql);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lName);
             preparedStatement.setString(3, birthYear);
@@ -96,15 +96,11 @@ public class EmpManagement extends JFrame{
 
             statement.close();
             preparedStatement.close();
-            Main.disconnect();
+            Utils.disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return employee;
-    }
-
-    public static void main(String[] args) {
-        EmpManagement ges = new EmpManagement();
     }
 }

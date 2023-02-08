@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-public class Main {
+public class Utils {
     private static Connection cx;
     public static Connection connect() {
         try {
@@ -54,4 +54,6 @@ public class Main {
             e.consume();
         }
     }
+
+
 }
