@@ -7,4 +7,5 @@ public class Gestion {
     private JButton btLogin;
     private JButton btRegister;
     private JTextField tfDoc;
+    private JButton btVolver;
 }

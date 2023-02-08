@@ -10,7 +10,8 @@ public class MainPage extends JFrame {
     private JTextArea taInfantiles;
     private JTextArea taFamilia;
     private JTextArea textArea1;
-    private JButton btSi;
+    private JButton btZurdos;
+    private JButton btSalir;
 
     public MainPage() {
 

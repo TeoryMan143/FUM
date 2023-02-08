@@ -7,4 +7,5 @@ public class Tarifas {
     private JButton btGetMember;
     private JButton btCharge;
     private JButton btMemberLogin;
+    private JButton btVolver;
 }

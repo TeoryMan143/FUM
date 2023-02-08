@@ -15,4 +15,5 @@ public class QueHambreHermano {
     private JTextField tfMember;
     private JButton btOrder;
     private JTextArea taItemlist;
+    private JButton btVolver;
 }

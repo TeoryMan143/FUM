@@ -6,4 +6,5 @@ public class Chargemember {
     private JTextField tfMemberLogin;
     private JTextField tfCharge;
     private JButton btSend;
+    private JButton btVolver;
 }

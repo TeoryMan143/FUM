@@ -7,4 +7,5 @@ public class Getmember {
     private JComboBox cbMember;
     private JButton btGetmember;
     private JTextField tfCharge;
+    private JButton btVolver;
 }
