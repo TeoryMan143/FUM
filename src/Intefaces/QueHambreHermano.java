@@ -12,4 +12,7 @@ public class QueHambreHermano {
     private JButton btChicken;
     private JButton btCoke;
     private JButton btPopCorn;
+    private JTextField tfMember;
+    private JButton btOrder;
+    private JTextArea taItemlist;
 }
