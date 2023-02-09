@@ -23,6 +23,7 @@ public class EmpManagement extends JFrame{
     private JTextField tfDoc;
     private JTextField tfDinosaurrr;
     private JTextField tfEmail;
+    private JButton btVolver;
     public Employee employee;
 
     public EmpManagement() {
