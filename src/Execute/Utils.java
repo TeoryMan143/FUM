@@ -1,10 +1,13 @@
 package Execute;
 
-import Intefaces.EmpManagement;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class Utils {
@@ -38,22 +41,31 @@ public class Utils {
             return false;
         return pat.matcher(email).matches();
     }
-    public static void openEmpManagement() {
-        EmpManagement empManagement = new EmpManagement();
-        Employee employee = empManagement.employee;
-
-        if (employee != null) {
-            System.out.println("Se registro el usuario " + employee.name);
-        } else {
-            System.out.println("Resgistro cancelado");
-        }
-    }
-    public static void onlyNumbers(KeyEvent e) {
+    public static void onlyNumbers(@NotNull KeyEvent e) {
         char c = e.getKeyChar();
         if (c < '0' || c > '9'){
             e.consume();
         }
     }
+    @Contract(" -> new")
+    public static @NotNull String codeGenerator() {
+        int length = 5;
+        String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+        Random random = new Random();
+        char[] text = new char[length];
+        for (int i = 0; i < length; i++) {
+            text[i] = characters.charAt(random.nextInt(characters.length()));
+        }
+        return new String(text);
+    }
+    public static int addArrayList(@NotNull ArrayList<Integer> list) {
+        int sum = 0;
 
+        for (int value : list) {
+            sum += value;
+        }
+
+        return sum;
+    }
 }

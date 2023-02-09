@@ -1,6 +1,7 @@
 package Intefaces;
 
 import Execute.Employee;
+import Execute.UI;
 import Execute.Utils;
 import javax.swing.*;
 import java.awt.*;
@@ -56,10 +57,10 @@ public class EmpManagement extends JFrame{
         String favDino = tfDinosaurrr.getText().trim();
 
         if (name.isEmpty() || lName.isEmpty() ||birthYear.isEmpty() ||email.isEmpty() ||doc.isEmpty() ||favDino.isEmpty() ) {
-            JOptionPane.showMessageDialog(this, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+            UI.emptyTf(this);
             return;
         } else if (!Utils.isValidEmail(email)) {
-            JOptionPane.showMessageDialog(this, "Porfavor introduce un correo electronico valido", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+            UI.unValidEmail(this);
             return;
         }
 
@@ -68,7 +69,6 @@ public class EmpManagement extends JFrame{
         if (employee != null) {
             JOptionPane.showMessageDialog(this, "Se ha realizado el registro con exito\n" +
                     "Podra ver si fue aprovado en el apartado de aprovación", "Registro", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se ha podido registrar al el usuario", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
         }
@@ -77,30 +77,40 @@ public class EmpManagement extends JFrame{
     private Employee addEmpToDatabase(String name, String lName, String birthYear, String email, String doc, String favDino) {
         Employee employee = null;
         try {
-            Statement statement = Utils.connect().createStatement();
-            String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = Utils.connect().prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, lName);
-            preparedStatement.setString(3, birthYear);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, doc);
-            preparedStatement.setString(6, favDino);
-            int isActive = Integer.parseInt(birthYear) < 2005 ? 1 : 0;//ඞ
-            preparedStatement.setString(7, String.valueOf(isActive));
+            Statement st = Utils.connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from employees where email = '" + email + "' or  id_doc = " + doc);
 
-            int addedRows = preparedStatement.executeUpdate();
-            if (addedRows > 0) {
-                employee = new Employee(name, lName, birthYear, email, doc, favDino);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "El usuario ya se encuentra registrado", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+            } else {
+                String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement pst = Utils.connect().prepareStatement(sql);
+                pst.setString(1, name);
+                pst.setString(2, lName);
+                pst.setString(3, birthYear);
+                pst.setString(4, email);
+                pst.setString(5, doc);
+                pst.setString(6, favDino);
+                int isActive = Integer.parseInt(birthYear) < 2005 ? 1 : 0;//ඞ
+                pst.setString(7, String.valueOf(isActive));
+
+                int addedRows = pst.executeUpdate();
+                if (addedRows > 0) {
+                    employee = new Employee(name, lName, birthYear, email, doc, favDino);
+                }
+                pst.close();
             }
 
-            statement.close();
-            preparedStatement.close();
+            st.close();
             Utils.disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return employee;
+    }
+
+    public static void main(String[] args) {
+        new EmpManagement();
     }
 }
