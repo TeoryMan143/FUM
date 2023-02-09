@@ -1,6 +1,5 @@
 package Intefaces;
 
-import Execute.Member;
 import Execute.UI;
 import Execute.Utils;
 
@@ -25,8 +24,8 @@ public class QueHambreHermano extends JFrame {
     private JTextField tfMember;
     private JButton btOrder;
     private JTextArea taItemlist;
+    private JButton btVolver;
     private JButton btNatJuice;
-    public Member member;
     public ArrayList<Integer> cart = new ArrayList<>();
     public String txtCart = "";
 
@@ -38,6 +37,11 @@ public class QueHambreHermano extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
+
+        btVolver.addActionListener(e -> {
+            UI.openServices();
+            dispose();
+        });
 
         btHotdog.addActionListener(e -> {
             cart.add(9500);

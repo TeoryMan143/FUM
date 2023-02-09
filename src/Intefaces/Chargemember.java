@@ -18,6 +18,7 @@ public class Chargemember extends JFrame{
     private JTextField tfCharge;
     private JButton btSend;
     private JPanel pnMain;
+    private JButton btVolver;
     private Member member;
 
     public Chargemember() {
@@ -35,6 +36,10 @@ public class Chargemember extends JFrame{
             public void keyTyped(KeyEvent e) {
                 Utils.onlyNumbers(e);
             }
+        });
+        btVolver.addActionListener(e -> {
+            UI.openTarifas();
+            dispose();
         });
     }
 

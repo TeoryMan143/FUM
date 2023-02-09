@@ -16,6 +16,7 @@ public class Gestion extends JFrame{
     private JButton btLogin;
     private JButton btRegister;
     private JTextField tfDoc;
+    private JButton btVolver;
     private JPanel pnMain;
 
     public Gestion() {
@@ -32,6 +33,10 @@ public class Gestion extends JFrame{
             dispose();
         });
         btLogin.addActionListener(e -> logInMember());
+        btVolver.addActionListener(e -> {
+            UI.openMainPage();
+            dispose();
+        });
         tfDoc.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

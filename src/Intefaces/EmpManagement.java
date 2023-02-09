@@ -33,10 +33,14 @@ public class EmpManagement extends JFrame{
         setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
 
         btSend.addActionListener(e -> registerEmployee());
+        btVolver.addActionListener(e -> {
+            UI.openGestion();
+            dispose();
+        });
 
-        setVisible(true);
         tfDate.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

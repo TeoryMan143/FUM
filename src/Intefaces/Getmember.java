@@ -20,6 +20,7 @@ public class Getmember extends JFrame {
     private JButton btGetmember;
     private JTextField tfCharge;
     private JPanel pnMain;
+    private JButton btVolver;
     public Member member;
 
     public Getmember() {
@@ -36,6 +37,11 @@ public class Getmember extends JFrame {
         cbMember.addItem("Pase tercera edad");
 
         btGetmember.addActionListener(e -> registerMember());
+        btVolver.addActionListener(e -> {
+            UI.openTarifas();
+            dispose();
+        });
+
         tfCharge.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
