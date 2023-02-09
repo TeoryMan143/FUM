@@ -68,4 +68,7 @@ public class Utils {
 
         return sum;
     }
+    public static int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
 }

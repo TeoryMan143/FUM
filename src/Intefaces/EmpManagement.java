@@ -3,11 +3,16 @@ package Intefaces;
 import Execute.Employee;
 import Execute.UI;
 import Execute.Utils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 public class EmpManagement extends JFrame{
     private JPanel pnMain;
@@ -83,7 +88,7 @@ public class EmpManagement extends JFrame{
             if (rs.next()) {
                 JOptionPane.showMessageDialog(this, "El usuario ya se encuentra registrado", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
             } else {
-                String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active, job) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement pst = Utils.connect().prepareStatement(sql);
                 pst.setString(1, name);
                 pst.setString(2, lName);
@@ -93,7 +98,28 @@ public class EmpManagement extends JFrame{
                 pst.setString(6, favDino);
                 int isActive = Integer.parseInt(birthYear) < 2005 ? 1 : 0;//ඞ
                 pst.setString(7, String.valueOf(isActive));
-
+                int jobNum = 0;
+                if (isActive == 1) {
+                    jobNum = Utils.getRandomNumber(1, 4);
+                }
+                String job;
+                switch (jobNum) {
+                    case 1:
+                        job = "Cajero";
+                        break;
+                    case 2:
+                        job = "Logística";
+                        break;
+                    case 3:
+                        job = "Administrador";
+                        break;
+                    case 4:
+                        job = "Mecánico";
+                        break;
+                    default:
+                        job = "No disponible";
+                }
+                pst.setString(8, job);
                 int addedRows = pst.executeUpdate();
                 if (addedRows > 0) {
                     employee = new Employee(name, lName, birthYear, email, doc, favDino);
