@@ -71,7 +71,7 @@
             </constraints>
             <properties>
               <font size="14"/>
-              <text value="Ingrese Su Número De Membresía"/>
+              <text value="Ingrese Su Código De Membresía"/>
             </properties>
           </component>
           <component id="105b5" class="javax.swing.JLabel">

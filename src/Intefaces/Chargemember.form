@@ -35,7 +35,7 @@
             </constraints>
             <properties>
               <font name="Arial" size="20"/>
-              <text value="Ingrese Su Número De Membresía"/>
+              <text value="Ingrese Su Código De Membresía"/>
             </properties>
           </component>
         </children>
