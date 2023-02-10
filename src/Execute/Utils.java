@@ -47,7 +47,6 @@ public class Utils {
             e.consume();
         }
     }
-    @Contract(" -> new")
     public static @NotNull String codeGenerator() {
         int length = 5;
         String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

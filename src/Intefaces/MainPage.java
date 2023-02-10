@@ -8,13 +8,15 @@ public class MainPage extends JFrame {
 
     private JPanel pnMain;
     private JButton btTarMem;
-    private JButton btQuienesSomos;
+    private JButton btQSomos;
     private JTextArea taInfantiles;
     private JTextArea taFamily;
     private JTextArea taJuve;
     private JButton btSi;
     private JButton btServices;
     private JButton btGestion;
+    private JButton btSalir;
+    private JButton btZurdos;
 
     public MainPage() {
         setTitle("FUM diviertete como quieras");
@@ -48,17 +50,23 @@ public class MainPage extends JFrame {
         taJuve.setText(txtJuve);
         taFamily.setText(txtFamily);
 
+        btSalir.addActionListener(e -> dispose());
+
         btTarMem.addActionListener(e -> {
-            dispose();
             UI.openTarifas();
+            dispose();
         });
         btServices.addActionListener(e -> {
-            dispose();
             UI.openServices();
+            dispose();
         });
         btGestion.addActionListener(e -> {
-            dispose();
             UI.openGestion();
+            dispose();
+        });
+        btQSomos.addActionListener(e -> {
+            UI.openQuienesSomos();
+            dispose();
         });
     }
 }

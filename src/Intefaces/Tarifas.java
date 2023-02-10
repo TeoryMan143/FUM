@@ -5,6 +5,8 @@ import Execute.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +17,7 @@ public class Tarifas extends JFrame{
     private JButton btGetMember;
     private JButton btCharge;
     private JButton btMemberLogin;
+    private JButton btVolver;
     private JPanel pnMain;
 
     public Tarifas() {
@@ -26,6 +29,11 @@ public class Tarifas extends JFrame{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
 
+        btVolver.addActionListener(e -> {
+            UI.openMainPage();
+            dispose();
+        });
+
         btGetMember.addActionListener(e -> {
             dispose();
             UI.openGetMember();
@@ -36,6 +44,14 @@ public class Tarifas extends JFrame{
         });
 
         btMemberLogin.addActionListener(e -> logInMember());
+        tfMemberLogin.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if (tfMemberLogin.getText().length() >= 5) {
+                    e.consume();
+                }
+            }
+        });
     }
 
     private void logInMember() {
@@ -51,7 +67,11 @@ public class Tarifas extends JFrame{
             ResultSet rs = st.executeQuery("select * from members where u_code = '" + uCode + "'");
 
             if (rs.next()) {
-                JOptionPane.showMessageDialog(this, "Ha ingresado satisfactoriamente", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                String email = rs.getString("email");
+                String funds = rs.getString("funds");
+                JOptionPane.showMessageDialog(this, "Ha ingresado satisfactoriamente\n" +
+                        "Correo registrado: " + email + "\n" +
+                        "Saldo: " + funds, "Registro", JOptionPane.INFORMATION_MESSAGE);
                 UI.openServices();
                 dispose();
             } else {

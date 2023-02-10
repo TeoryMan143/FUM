@@ -33,6 +33,9 @@ public class UI {
     public static void openGestion() {
         new Gestion();
     }
+    public static void openQuienesSomos() {
+        new QuienesSomos();
+    };
     public static void openEmpManagement() {
         EmpManagement empManagement = new EmpManagement();
         Employee employee = empManagement.employee;

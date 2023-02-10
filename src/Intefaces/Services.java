@@ -8,6 +8,7 @@ import java.awt.*;
 public class Services extends JFrame{
     private JButton btOrder;
     private JPanel pnMain;
+    private JButton btVolver;
 
     public Services() {
         setTitle("FUM diviertete como quieras");
@@ -20,6 +21,10 @@ public class Services extends JFrame{
 
         btOrder.addActionListener(e -> {
             UI.openQueHambre();
+            dispose();
+        });
+        btVolver.addActionListener(e -> {
+            UI.openMainPage();
             dispose();
         });
     }

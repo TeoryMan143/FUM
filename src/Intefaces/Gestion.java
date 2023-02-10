@@ -29,7 +29,7 @@ public class Gestion extends JFrame{
         setVisible(true);
 
         btRegister.addActionListener(e -> {
-            UI.openGetMember();
+            UI.openEmpManagement();
             dispose();
         });
         btLogin.addActionListener(e -> logInMember());
