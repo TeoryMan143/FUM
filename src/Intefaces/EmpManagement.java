@@ -1,11 +1,18 @@
 package Intefaces;
 
+import Execute.Employee;
+import Execute.UI;
+import Execute.Utils;
+
 import javax.swing.*;
 import java.awt.*;
-import java.sql.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import Execute.Employee;
-import Execute.Main;
 
 public class EmpManagement extends JFrame{
     private JPanel pnMain;
@@ -22,31 +29,48 @@ public class EmpManagement extends JFrame{
     public EmpManagement() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530);
-        setMinimumSize(new Dimension(500, 530));
+        setBounds(0,0, 500, 530); // dimensiones iniciales
+        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
 
-        btSend.addActionListener(e -> {
-            registerEmployee();
+        btSend.addActionListener(e -> registerEmployee());
+        btVolver.addActionListener(e -> {
+            UI.openGestion();
+            dispose();
         });
 
-        setVisible(true);
+        tfDate.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Utils.onlyNumbers(e);
+                if (tfDate.getText().length() >= 4) {
+                    e.consume();
+                }
+            }
+        });
+        tfDoc.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Utils.onlyNumbers(e);
+            }
+        });
     }
 
     private void registerEmployee() {
-        String name = tfName.getText();
-        String lName = tfLname.getText();
-        String birthYear = tfDate.getText();
-        String email = tfEmail.getText();
-        String doc = tfDoc.getText();
-        String favDino = tfDinosaurrr.getText();
+        String name = tfName.getText().trim();
+        String lName = tfLname.getText().trim();
+        String birthYear = tfDate.getText().trim();
+        String email = tfEmail.getText().trim();
+        String doc = tfDoc.getText().trim();
+        String favDino = tfDinosaurrr.getText().trim();
 
         if (name.isEmpty() || lName.isEmpty() ||birthYear.isEmpty() ||email.isEmpty() ||doc.isEmpty() ||favDino.isEmpty() ) {
-            JOptionPane.showMessageDialog(this, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+            UI.emptyTf(this);
             return;
-        } else if (!Main.isValidEmail(email)) {
-            JOptionPane.showMessageDialog(this, "Porfavor introduce un correo electronico valido", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+        } else if (!Utils.isValidEmail(email)) {
+            UI.unValidEmail(this);
             return;
         }
 
@@ -55,7 +79,6 @@ public class EmpManagement extends JFrame{
         if (employee != null) {
             JOptionPane.showMessageDialog(this, "Se ha realizado el registro con exito\n" +
                     "Podra ver si fue aprovado en el apartado de aprovación", "Registro", JOptionPane.INFORMATION_MESSAGE);
-            dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se ha podido registrar al el usuario", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
         }
@@ -63,28 +86,54 @@ public class EmpManagement extends JFrame{
 
     private Employee addEmpToDatabase(String name, String lName, String birthYear, String email, String doc, String favDino) {
         Employee employee = null;
-        final String DB_URL = "jdbc:mysql://localhost:3306/fum?serverTimezone=UTC";
-        final String USER = "root";
-        final String PASS = "123";
         try {
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            Statement statement = connection.createStatement();
-            String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, lName);
-            preparedStatement.setString(3, birthYear);
-            preparedStatement.setString(4, email);
-            preparedStatement.setString(5, doc);
-            preparedStatement.setString(6, favDino);
+            Statement st = Utils.connect().createStatement();
+            ResultSet rs = st.executeQuery("select * from employees where email = '" + email + "' or  id_doc = " + doc);
 
-            int addedRows = preparedStatement.executeUpdate();
-            if (addedRows > 0) {
-                employee = new Employee(name, lName, birthYear, email, doc, favDino);
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "El usuario ya se encuentra registrado", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+            } else {
+                String sql = "INSERT INTO employees (em_name, em_last, birth_year, email, id_doc, fav_dino, is_active, job) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement pst = Utils.connect().prepareStatement(sql);
+                pst.setString(1, name);
+                pst.setString(2, lName);
+                pst.setString(3, birthYear);
+                pst.setString(4, email);
+                pst.setString(5, doc);
+                pst.setString(6, favDino);
+                int isActive = Integer.parseInt(birthYear) < 2005 ? 1 : 0;//ඞ
+                pst.setString(7, String.valueOf(isActive));
+                int jobNum = 0;
+                if (isActive == 1) {
+                    jobNum = Utils.getRandomNumber(1, 4);
+                }
+                String job;
+                switch (jobNum) {
+                    case 1:
+                        job = "Cajero";
+                        break;
+                    case 2:
+                        job = "Logística";
+                        break;
+                    case 3:
+                        job = "Administrador";
+                        break;
+                    case 4:
+                        job = "Mecánico";
+                        break;
+                    default:
+                        job = "No disponible";
+                }
+                pst.setString(8, job);
+                int addedRows = pst.executeUpdate();
+                if (addedRows > 0) {
+                    employee = new Employee(name, lName, birthYear, email, doc, favDino);
+                }
+                pst.close();
             }
 
-            statement.close();
-            connection.close();
+            st.close();
+            Utils.disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -93,6 +142,6 @@ public class EmpManagement extends JFrame{
     }
 
     public static void main(String[] args) {
-        EmpManagement ges = new EmpManagement();
+        new EmpManagement();
     }
 }

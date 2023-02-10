@@ -7,6 +7,7 @@ public class Employee {
     public String email;
     public String doc;
     public String favDino;
+    public int isActive = 0;
 
     public Employee(String name, String lName, String birthYear, String email, String doc, String favDino) {
         this.name = name;
@@ -16,4 +17,6 @@ public class Employee {
         this.doc = doc;
         this.favDino = favDino;
     }
+
+
 }
