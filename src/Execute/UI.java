@@ -13,13 +13,7 @@ public class UI {
         new Tarifas();
     }
     public static void openGetMember() {
-        Getmember getmember = new Getmember();
-        Member member = getmember.member;
-        if (member != null) {
-            System.out.println("Se registro la membresia: " + member.getuCode());
-        } else {
-            System.out.println("Resgistro cancelado");
-        }
+        new Getmember();
     }
     public static void openChargemember() {
         new Chargemember();
@@ -37,14 +31,7 @@ public class UI {
         new QuienesSomos();
     };
     public static void openEmpManagement() {
-        EmpManagement empManagement = new EmpManagement();
-        Employee employee = empManagement.employee;
-
-        if (employee != null) {
-            System.out.println("Se registro el usuario: " + employee.name);
-        } else {
-            System.out.println("Resgistro cancelado");
-        }
+        new EmpManagement();
     }
     public static void emptyTf(Component component) {
         JOptionPane.showMessageDialog(component, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);

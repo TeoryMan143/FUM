@@ -79,6 +79,10 @@ public class Gestion extends JFrame{
                         salary = "$45.000";
                         time = "20";
                         break;
+                    case "No disponible":
+                        salary = "N/A";
+                        time = "N/A";
+                        break;
                     default:
                         time = "";
                         salary = "";
@@ -94,9 +98,5 @@ public class Gestion extends JFrame{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Gestion();
     }
 }
