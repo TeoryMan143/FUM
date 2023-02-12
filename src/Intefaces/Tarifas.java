@@ -10,7 +10,6 @@ import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ResourceBundle;
 
 public class Tarifas extends JFrame{
     private JTextField tfMemberLogin;
@@ -23,8 +22,8 @@ public class Tarifas extends JFrame{
     public Tarifas() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0,0, 600, 700); // dimensiones iniciales
+        setMinimumSize(new Dimension(600, 700)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -80,6 +79,7 @@ public class Tarifas extends JFrame{
 
             st.close();
             rs.close();
+            Utils.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }

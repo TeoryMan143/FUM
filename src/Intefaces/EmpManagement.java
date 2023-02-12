@@ -29,8 +29,8 @@ public class EmpManagement extends JFrame{
     public EmpManagement() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0,0, 600, 750); // dimensiones iniciales
+        setMinimumSize(new Dimension(600, 750)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
@@ -66,7 +66,7 @@ public class EmpManagement extends JFrame{
         String doc = tfDoc.getText().trim();
         String favDino = tfDinosaurrr.getText().trim();
 
-        if (name.isEmpty() || lName.isEmpty() ||birthYear.isEmpty() ||email.isEmpty() ||doc.isEmpty() ||favDino.isEmpty() ) {
+        if (name.isEmpty() || lName.isEmpty() || birthYear.isEmpty() || email.isEmpty() || doc.isEmpty() || favDino.isEmpty() ) {
             UI.emptyTf(this);
             return;
         } else if (!Utils.isValidEmail(email)) {

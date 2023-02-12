@@ -13,8 +13,8 @@ public class Services extends JFrame{
     public Services() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0,0, 700, 800); // dimensiones iniciales
+        setMinimumSize(new Dimension(700, 800)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);

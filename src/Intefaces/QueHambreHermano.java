@@ -1,6 +1,5 @@
 package Intefaces;
 
-import Execute.Member;
 import Execute.UI;
 import Execute.Utils;
 
@@ -27,17 +26,18 @@ public class QueHambreHermano extends JFrame {
     private JTextArea taItemlist;
     private JButton btVolver;
     private JButton btNatJuice;
+    private JTextField tfTotalP;
+    private ButtonGroup bgBuy;
     public ArrayList<Integer> cart = new ArrayList<>();
     public String txtCart = "";
-    private Member member;
 
     public QueHambreHermano() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0, 0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0, 0, 600, 800); // dimensiones iniciales
+        setMinimumSize(new Dimension(600, 800)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
         btVolver.addActionListener(e -> {
@@ -49,46 +49,55 @@ public class QueHambreHermano extends JFrame {
             cart.add(9500);
             txtCart += "Perro, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btSandwich.addActionListener(e -> {
             cart.add(9000);
             txtCart += "Sandwich, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btPizza.addActionListener(e -> {
             cart.add(8000);
             txtCart += "Pizza, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btBorgar.addActionListener(e -> {
             cart.add(15000);
             txtCart += "Borgar, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btChicken.addActionListener(e -> {
             cart.add(6500);
             txtCart += "Nugets, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btCoke.addActionListener(e -> {
             cart.add(2800);
             txtCart += "Coke, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btNatJuice.addActionListener(e -> {
             cart.add(3000);
             txtCart += "Jugo Natural, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btPopCorn.addActionListener(e -> {
             cart.add(5600);
             txtCart += "Crispetas, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
         btIcecream.addActionListener(e -> {
             cart.add(4000);
             txtCart += "Helado, ";
             taItemlist.setText(txtCart);
+            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
 
         btOrder.addActionListener(e -> loadFunds());
@@ -101,18 +110,27 @@ public class QueHambreHermano extends JFrame {
             return;
         }
         try {
-            int purchase = Utils.addArrayList(cart);
             Statement st = Utils.connect().createStatement();
             ResultSet rs = st.executeQuery("select * from members where u_code = '" + uCode + "'");
             if (rs.next()) {
-                double originFunds = Double.parseDouble(rs.getString("funds"));
+                String discount = "";
+                double originFunds = rs.getDouble("funds");
+                String metype = rs.getString("type");
+                double purchase;
+                if (metype.equals("Pase especial anual") || metype.equals("Pase tercera edad")) {
+                    purchase = Utils.addArrayList(cart) * 0.8;
+                    discount = "Con un descuento del 20%\n";
+                } else purchase = Utils.addArrayList(cart);
                 double f_funds = originFunds - purchase;
                 PreparedStatement pst = Utils.connect().prepareStatement("update members set funds = " + f_funds + " where u_code = '" + uCode + "'");
                 if (f_funds < 0) {
                     JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Se ha realizado la compra satisfactoriamente\n" +
-                            "Fondos restates: " + f_funds, "Registro", JOptionPane.INFORMATION_MESSAGE);
+                            discount +
+                            "Usted pago: " + purchase + "\n" +
+                            "Fondos restates: " + f_funds,
+                            "Registro", JOptionPane.INFORMATION_MESSAGE);
                 }
                 pst.executeUpdate();
                 pst.close();
@@ -125,5 +143,9 @@ public class QueHambreHermano extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        new QueHambreHermano();
     }
 }

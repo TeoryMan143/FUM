@@ -33,6 +33,9 @@ public class UI {
     public static void openEmpManagement() {
         new EmpManagement();
     }
+    public static void openFumo() {
+        new Fumo();
+    }
     public static void emptyTf(Component component) {
         JOptionPane.showMessageDialog(component, "Porfavor introduce los datos solicitados", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
     }

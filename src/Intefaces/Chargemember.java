@@ -24,10 +24,10 @@ public class Chargemember extends JFrame{
     public Chargemember() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0, 0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0, 0, 800, 750); // dimensiones iniciales
+        setMinimumSize(new Dimension(600, 700)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
         btSend.addActionListener(e -> loadFunds());

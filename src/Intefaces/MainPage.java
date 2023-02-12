@@ -1,6 +1,7 @@
 package Intefaces;
 
 import Execute.UI;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +13,6 @@ public class MainPage extends JFrame {
     private JTextArea taInfantiles;
     private JTextArea taFamily;
     private JTextArea taJuve;
-    private JButton btSi;
     private JButton btServices;
     private JButton btGestion;
     private JButton btSalir;
@@ -21,8 +21,8 @@ public class MainPage extends JFrame {
     public MainPage() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0,0, 900, 730); // dimensiones iniciales
+        setMinimumSize(new Dimension(900, 730)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -51,6 +51,11 @@ public class MainPage extends JFrame {
         taFamily.setText(txtFamily);
 
         btSalir.addActionListener(e -> dispose());
+
+        btZurdos.addActionListener(e -> {
+            UI.openFumo();
+            dispose();
+        });
 
         btTarMem.addActionListener(e -> {
             UI.openTarifas();

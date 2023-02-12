@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="pnMain" layout-manager="GridLayoutManager" row-count="5" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1776" height="828"/>
+      <xy x="20" y="20" width="847" height="785"/>
     </constraints>
     <properties>
       <background color="-14650148"/>
@@ -119,20 +119,11 @@
         <children>
           <component id="efdd" class="javax.swing.JLabel">
             <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <icon value="ResourcesUwU/1675901201869.png"/>
               <text value=""/>
-            </properties>
-          </component>
-          <component id="a3a49" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font size="20"/>
-              <text value="Atracciones juveniles"/>
             </properties>
           </component>
           <component id="671d4" class="javax.swing.JTextArea" binding="taJuve">
@@ -144,6 +135,15 @@
             <properties>
               <background color="-10068798"/>
               <font size="14"/>
+            </properties>
+          </component>
+          <component id="53ada" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <font size="20"/>
+              <text value="Atracciones juveniles"/>
             </properties>
           </component>
         </children>

@@ -1,9 +1,9 @@
 package Intefaces;
 
-import Execute.Employee;
 import Execute.Member;
 import Execute.UI;
 import Execute.Utils;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -26,8 +26,8 @@ public class Getmember extends JFrame {
     public Getmember() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0, 0, 500, 530); // dimensiones iniciales
-        setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
+        setBounds(0, 0, 600, 530); // dimensiones iniciales
+        setMinimumSize(new Dimension(600, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
@@ -81,20 +81,25 @@ public class Getmember extends JFrame {
             if (rs.next()) {
                 JOptionPane.showMessageDialog(this, "El correo electronico ya se encuentra en uso", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
             } else {
-                PreparedStatement pst = Utils.connect().prepareStatement("insert into members (email, u_code, funds) values (?, ?, ?)");
+                PreparedStatement pst = Utils.connect().prepareStatement("insert into members (email, u_code, funds, type) values (?, ?, ?, ?)");
                 pst.setString(1, email);
                 String uCode = Utils.codeGenerator();
                 pst.setString(2, uCode);
 
                 double purchase;
+                String metype;
                 if (Objects.requireNonNull(cbMember.getSelectedItem()).toString().equals("Pase especial anual")) {
                     purchase = 50000;
+                    metype = "Pase especial anual";
                 } else if (Objects.requireNonNull(cbMember.getSelectedItem()).toString().equals("Pase rapido")) {
                     purchase = 2000;
+                    metype = "Pase rapido";
                 } else if (Objects.requireNonNull(cbMember.getSelectedItem()).toString().equals("Pase tercera edad")) {
                     purchase = 10000;
+                    metype = "Pase tercera edad";
                 } else {
                     purchase = 0;
+                    metype = "Pase tercera edad";
                 }
 
                 double f_funds = Double.parseDouble(funds) - purchase;
@@ -102,6 +107,7 @@ public class Getmember extends JFrame {
                     JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
                 }
                 pst.setString(3, String.valueOf(f_funds));
+                pst.setString(4, metype);
 
                 int addedRows = pst.executeUpdate();
                 if (addedRows > 0) {
@@ -111,9 +117,14 @@ public class Getmember extends JFrame {
             }
             st.close();
             rs.close();
+            Utils.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return member;
+    }
+
+    public static void main(String[] args) {
+        new Getmember();
     }
 }

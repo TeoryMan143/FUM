@@ -25,7 +25,7 @@ public class Gestion extends JFrame{
         setBounds(0, 0, 500, 530); // dimensiones iniciales
         setMinimumSize(new Dimension(500, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
         btRegister.addActionListener(e -> {
