@@ -140,8 +140,4 @@ public class EmpManagement extends JFrame{
         }
         return employee;
     }
-
-    public static void main(String[] args) {
-        new EmpManagement();
-    }
 }

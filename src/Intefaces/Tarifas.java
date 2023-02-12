@@ -35,12 +35,12 @@ public class Tarifas extends JFrame{
         });
 
         btGetMember.addActionListener(e -> {
-            dispose();
             UI.openGetMember();
+            dispose();
         });
         btCharge.addActionListener(e -> {
-            dispose();
             UI.openChargemember();
+            dispose();
         });
 
         btMemberLogin.addActionListener(e -> logInMember());
@@ -83,8 +83,5 @@ public class Tarifas extends JFrame{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-    public static void main(String[] args) {
-        new Tarifas();
     }
 }

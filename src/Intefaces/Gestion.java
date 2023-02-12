@@ -62,6 +62,7 @@ public class Gestion extends JFrame{
                 String job = rs.getString("job");
                 String salary;
                 String time;
+                String yon = " ";
                 switch (job) {
                     case "Cajero":
                         salary = "$25.000";
@@ -79,12 +80,17 @@ public class Gestion extends JFrame{
                         salary = "$45.000";
                         time = "20";
                         break;
+                    case "No disponible":
+                        yon = " no ";
+                        salary = "N/A";
+                        time = "N/A";
+                        break;
                     default:
                         time = "";
                         salary = "";
                         JOptionPane.showMessageDialog(this, "How? ඞ", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
                 }
-                JOptionPane.showMessageDialog(this, "Usted ha sido aprobado\n" +
+                JOptionPane.showMessageDialog(this, "Usted" + yon + "ha sido aprobado\n" +
                         "Puesto: " + job + "\n" +
                         "Salario diario: " + salary + "\n" +
                         "Dias de trabajo al mes: " + time, "Resistro de empleado", JOptionPane.INFORMATION_MESSAGE);
@@ -94,9 +100,5 @@ public class Gestion extends JFrame{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Gestion();
     }
 }

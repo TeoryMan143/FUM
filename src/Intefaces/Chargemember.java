@@ -84,8 +84,4 @@ public class Chargemember extends JFrame{
         }
         return member;
     }
-
-    public static void main(String[] args) {
-        new Chargemember();
-    }
 }

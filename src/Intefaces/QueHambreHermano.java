@@ -1,5 +1,6 @@
 package Intefaces;
 
+import Execute.Member;
 import Execute.UI;
 import Execute.Utils;
 
@@ -28,6 +29,7 @@ public class QueHambreHermano extends JFrame {
     private JButton btNatJuice;
     public ArrayList<Integer> cart = new ArrayList<>();
     public String txtCart = "";
+    private Member member;
 
     public QueHambreHermano() {
         setTitle("FUM diviertete como quieras");
@@ -106,22 +108,22 @@ public class QueHambreHermano extends JFrame {
                 double originFunds = Double.parseDouble(rs.getString("funds"));
                 double f_funds = originFunds - purchase;
                 PreparedStatement pst = Utils.connect().prepareStatement("update members set funds = " + f_funds + " where u_code = '" + uCode + "'");
-                pst.executeUpdate();
                 if (f_funds < 0) {
                     JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(this, "Se ha realizado la compra satisfactoriamente\n" +
                             "Fondos restates: " + f_funds, "Registro", JOptionPane.INFORMATION_MESSAGE);
                 }
+                pst.executeUpdate();
+                pst.close();
             } else {
                 JOptionPane.showMessageDialog(this, "Codigo de membresia no encontrado", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
             }
+            st.close();
+            rs.close();
+            Utils.disconnect();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new QueHambreHermano();
     }
 }
