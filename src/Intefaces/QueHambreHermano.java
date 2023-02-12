@@ -27,7 +27,6 @@ public class QueHambreHermano extends JFrame {
     private JButton btVolver;
     private JButton btNatJuice;
     private JTextField tfTotalP;
-    private ButtonGroup bgBuy;
     public ArrayList<Integer> cart = new ArrayList<>();
     public String txtCart = "";
 
@@ -143,9 +142,5 @@ public class QueHambreHermano extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new QueHambreHermano();
     }
 }
