@@ -15,9 +15,8 @@ public class Utils {
     public static Connection connect() {
         try {
             final String DB_URL = "jdbc:mysql://us-east.connect.psdb.cloud/fum?sslMode=VERIFY_IDENTITY";
-            final String USER = "eelr4jpdrn5302k9ojhh";
-            final String PRO_PASS = "pscale_pw_qz18c0tznggvRXO2dZebej5uPJDN8muZY868cxYQdVX";
-            final String PASS = "pscale_pw_Br7fxnCnfsjJhnCSSCTcCZjdOiK65BWiB3N5oyFZI7Y";
+            final String USER = "1uue7o6s0swwhf5gbvg8";
+            final String PASS = "pscale_pw_qz18c0tznggvRXO2dZebej5uPJDN8muZY868cxYQdVX";
             cx = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
             e.printStackTrace();
