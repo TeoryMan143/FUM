@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="1908" height="2169"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-14650148"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="8a085" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -13,7 +15,9 @@
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-14650148"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="6b9c8" class="javax.swing.JLabel">
@@ -29,7 +33,9 @@
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
+            <properties>
+              <background color="-11185694"/>
+            </properties>
             <border type="none"/>
             <children>
               <grid id="388f1" layout-manager="GridLayoutManager" row-count="7" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -37,7 +43,9 @@
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-11185694"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="a7895" class="javax.swing.JLabel">
@@ -110,7 +118,9 @@
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <background color="-11185694"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="f56a8" class="javax.swing.JLabel">
