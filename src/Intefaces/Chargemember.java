@@ -19,7 +19,6 @@ public class Chargemember extends JFrame{
     private JButton btSend;
     private JPanel pnMain;
     private JButton btVolver;
-    private Member member;
 
     public Chargemember() {
         setTitle("FUM diviertete como quieras");
@@ -28,6 +27,7 @@ public class Chargemember extends JFrame{
         setMinimumSize(new Dimension(600, 700)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         btSend.addActionListener(e -> loadFunds());
@@ -44,6 +44,7 @@ public class Chargemember extends JFrame{
     }
 
     private void loadFunds() {
+        Member member;
         String uCode = tfMemberLogin.getText().trim();
         String funds = tfCharge.getText().trim();
 

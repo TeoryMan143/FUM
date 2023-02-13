@@ -37,6 +37,7 @@ public class QueHambreHermano extends JFrame {
         setMinimumSize(new Dimension(600, 800)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         btVolver.addActionListener(e -> {

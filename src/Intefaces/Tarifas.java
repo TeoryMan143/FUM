@@ -25,7 +25,8 @@ public class Tarifas extends JFrame{
         setBounds(0,0, 600, 700); // dimensiones iniciales
         setMinimumSize(new Dimension(600, 700)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         btVolver.addActionListener(e -> {

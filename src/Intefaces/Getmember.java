@@ -29,7 +29,8 @@ public class Getmember extends JFrame {
         setBounds(0, 0, 600, 530); // dimensiones iniciales
         setMinimumSize(new Dimension(600, 530)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         cbMember.addItem("Pase especial anual");

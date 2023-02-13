@@ -21,10 +21,11 @@ public class MainPage extends JFrame {
     public MainPage() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 900, 730); // dimensiones iniciales
-        setMinimumSize(new Dimension(900, 730)); // dimensiones minimas
+        setBounds(0,0, 920, 800); // dimensiones iniciales
+        setMinimumSize(new Dimension(920, 800)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         final String txtInfant = "Estas atracciones están diseñadas para niños que midan entre 0,80 m y 1,10 m de altura, por lo \n" +

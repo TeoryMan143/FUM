@@ -16,7 +16,8 @@ public class Services extends JFrame{
         setBounds(0,0, 700, 800); // dimensiones iniciales
         setMinimumSize(new Dimension(700, 800)); // dimensiones minimas
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         btOrder.addActionListener(e -> {

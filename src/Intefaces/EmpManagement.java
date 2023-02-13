@@ -33,6 +33,7 @@ public class EmpManagement extends JFrame{
         setMinimumSize(new Dimension(600, 750)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         btSend.addActionListener(e -> registerEmployee());

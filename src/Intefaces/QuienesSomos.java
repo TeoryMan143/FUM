@@ -19,6 +19,7 @@ public class QuienesSomos extends JFrame{
         setMinimumSize(new Dimension(800, 600)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
         btVolver.addActionListener(e -> {
