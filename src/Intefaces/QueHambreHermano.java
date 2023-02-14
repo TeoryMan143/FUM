@@ -28,7 +28,19 @@ public class QueHambreHermano extends JFrame {
     private JButton btVolver;
     private JButton btNatJuice;
     private JTextField tfTotalP;
+    private JButton btUnHotdog;
+    private JButton btUnSandwich;
+    private JButton btUnPizza;
+    private JButton btUnBorgar;
+    private JButton btUnChicken;
+    private JButton btUnCoke;
+    private JButton btUnNatJuice;
+    private JButton btUnPopCorn;
+    private JButton btUnIcecream;
+    private JCheckBox efectivoCheckBox;
+    private JTextField tfEfect;
     public ArrayList<Integer> cart = new ArrayList<>();
+    public ArrayList<String> txtCartList = new ArrayList<>();
     public String txtCart = "";
 
     public QueHambreHermano() {
@@ -46,60 +58,41 @@ public class QueHambreHermano extends JFrame {
             dispose();
         });
 
-        btHotdog.addActionListener(e -> {
-            cart.add(9500);
-            txtCart += "Perro, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btSandwich.addActionListener(e -> {
-            cart.add(9000);
-            txtCart += "Sandwich, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btPizza.addActionListener(e -> {
-            cart.add(8000);
-            txtCart += "Pizza, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btBorgar.addActionListener(e -> {
-            cart.add(15000);
-            txtCart += "Borgar, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btChicken.addActionListener(e -> {
-            cart.add(6500);
-            txtCart += "Nugets, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btCoke.addActionListener(e -> {
-            cart.add(2800);
-            txtCart += "Coke, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btNatJuice.addActionListener(e -> {
-            cart.add(3000);
-            txtCart += "Jugo Natural, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btPopCorn.addActionListener(e -> {
-            cart.add(5600);
-            txtCart += "Crispetas, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
-        btIcecream.addActionListener(e -> {
-            cart.add(4000);
-            txtCart += "Helado, ";
-            taItemlist.setText(txtCart);
-            tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
-        });
+        btHotdog.addActionListener(e -> registerPurchase("HotDog", 9500));
+
+        btSandwich.addActionListener(e -> registerPurchase("Sandwich", 9000));
+
+        btPizza.addActionListener(e -> registerPurchase("Pizza", 8000));
+
+        btBorgar.addActionListener(e -> registerPurchase("Hamburguesa", 15000));
+
+        btChicken.addActionListener(e -> registerPurchase("Nuggets", 6500));
+
+        btCoke.addActionListener(e -> registerPurchase("CocaCola", 2800));
+
+        btNatJuice.addActionListener(e -> registerPurchase("Jugo Natural", 3000));
+
+        btPopCorn.addActionListener(e -> registerPurchase("Crispetas", 5600));
+
+        btIcecream.addActionListener(e -> registerPurchase("Helado", 4000));
+
+        btUnHotdog.addActionListener(e -> deleteItem("HotDog", 9500));
+
+        btUnSandwich.addActionListener(e -> deleteItem("Sandwich", 9000));
+
+        btUnPizza.addActionListener(e -> deleteItem("Pizza", 8000));
+
+        btUnBorgar.addActionListener(e -> deleteItem("Hamburguesa", 15000));
+
+        btUnChicken.addActionListener(e -> deleteItem("Nuggets", 6500));
+
+        btUnCoke.addActionListener(e -> deleteItem("CocaCola", 2800));
+
+        btUnNatJuice.addActionListener(e -> deleteItem("Jugo Natural", 3000));
+
+        btUnPopCorn.addActionListener(e -> deleteItem("Crispetas", 5600));
+
+        btUnIcecream.addActionListener(e -> deleteItem("Helado", 4000));
 
         if (UI.loggedMember != null) {
             Member member = UI.loggedMember;
@@ -149,6 +142,20 @@ public class QueHambreHermano extends JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void registerPurchase(String product, int price) {
+        txtCartList.add(product);
+        taItemlist.setText(Utils.createCartText(txtCartList));
+        cart.add(price);
+        tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
+    }
+
+    private void deleteItem(String product, int price) {
+        txtCartList.remove(product);
+        taItemlist.setText(Utils.createCartText(txtCartList));
+        cart.remove(Integer.valueOf(price));
+        tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
     }
 
     public static void main(String[] args) {

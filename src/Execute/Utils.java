@@ -66,6 +66,13 @@ public class Utils {
 
         return sum;
     }
+    public static String createCartText(ArrayList<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String s : list) {
+            sb.append(s).append(" ");
+        }
+        return sb.toString().trim();
+    }
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
