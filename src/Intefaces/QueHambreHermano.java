@@ -6,6 +6,8 @@ import Execute.Utils;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,8 +39,9 @@ public class QueHambreHermano extends JFrame {
     private JButton btUnNatJuice;
     private JButton btUnPopCorn;
     private JButton btUnIcecream;
-    private JCheckBox efectivoCheckBox;
+    private JCheckBox cbEfect;
     private JTextField tfEfect;
+    private JLabel lbCamp;
     public ArrayList<Integer> cart = new ArrayList<>();
     public ArrayList<String> txtCartList = new ArrayList<>();
     public String txtCart = "";
@@ -100,47 +103,92 @@ public class QueHambreHermano extends JFrame {
         }
 
         btOrder.addActionListener(e -> loadFunds());
+        tfEfect.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                Utils.onlyNumbers(e);
+            }
+        });
+
+        cbEfect.addActionListener(e -> {
+            if (cbEfect.isSelected()) {
+                tfMember.setVisible(false);
+                tfEfect.setVisible(true);
+                lbCamp.setText("Introdusca el dinero a pagar");
+            }  else {
+                tfMember.setVisible(true);
+                tfEfect.setVisible(false);
+                lbCamp.setText("Ingrese Su Código De Membresía");
+            }
+        });
     }
 
     private void loadFunds() {
-        String uCode = tfMember.getText().trim();
-        if (uCode.isEmpty()) {
-            UI.emptyTf(this);
-            return;
-        }
-        try {
-            Statement st = Utils.connect().createStatement();
-            ResultSet rs = st.executeQuery("select * from members where u_code = '" + uCode + "'");
-            if (rs.next()) {
-                String discount = "";
-                double originFunds = rs.getDouble("funds");
-                String metype = rs.getString("type");
-                double purchase;
-                if (metype.equals("Pase especial anual") || metype.equals("Pase tercera edad")) {
-                    purchase = Utils.addArrayList(cart) * 0.8;
-                    discount = "Con un descuento del 20%\n";
-                } else purchase = Utils.addArrayList(cart);
-                double f_funds = originFunds - purchase;
-                PreparedStatement pst = Utils.connect().prepareStatement("update members set funds = " + f_funds + " where u_code = '" + uCode + "'");
-                if (f_funds < 0) {
-                    JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Se ha realizado la compra satisfactoriamente\n" +
-                            discount +
-                            "Usted pago: " + purchase + "\n" +
-                            "Fondos restates: " + f_funds,
-                            "Registro", JOptionPane.INFORMATION_MESSAGE);
-                }
-                pst.executeUpdate();
-                pst.close();
-            } else {
-                JOptionPane.showMessageDialog(this, "Codigo de membresia no encontrado", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+        if (cbEfect.isSelected()){
+            String tmpMoney = tfEfect.getText().trim();
+            if (tmpMoney.isEmpty()) {
+                UI.emptyTf(this);
+                return;
             }
-            st.close();
-            rs.close();
-            Utils.disconnect();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            long money = Long.parseLong(tmpMoney);
+            if (money < Utils.addArrayList(cart)) {
+                JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Se ha realizado la compra satisfactoriamente\n" +
+                        "Su devuelta es: " + (money - Utils.addArrayList(cart)), "Registro", JOptionPane.INFORMATION_MESSAGE);
+                txtCartList.removeAll(txtCartList);
+                cart.removeAll(cart);
+                taItemlist.setText(Utils.createCartText(txtCartList));
+                tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
+            }
+        }else {
+            String uCode = tfMember.getText().trim();
+            if (uCode.isEmpty()) {
+                UI.emptyTf(this);
+                return;
+            }
+            try {
+                if (Utils.addArrayList(cart) == 0) {
+                    JOptionPane.showMessageDialog(this, "Elige los productos a comprar", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    Statement st = Utils.connect().createStatement();
+                    ResultSet rs = st.executeQuery("select * from members where u_code = '" + uCode + "'");
+                    if (rs.next()) {
+                        String discount = "";
+                        double originFunds = rs.getDouble("funds");
+                        String metype = rs.getString("type");
+                        double purchase;
+                        if (metype.equals("Pase especial anual") || metype.equals("Pase tercera edad")) {
+                            purchase = Utils.addArrayList(cart) * 0.8;
+                            discount = "Con un descuento del 20%\n";
+                        } else purchase = Utils.addArrayList(cart);
+                        double f_funds = originFunds - purchase;
+                        PreparedStatement pst = Utils.connect().prepareStatement("update members set funds = " + f_funds + " where u_code = '" + uCode + "'");
+                        if (f_funds < 0) {
+                            JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Se ha realizado la compra satisfactoriamente\n" +
+                                            discount +
+                                            "Usted pago: " + purchase + "\n" +
+                                            "Fondos restates: " + f_funds,
+                                    "Registro", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        pst.executeUpdate();
+                        pst.close();
+                        txtCartList.removeAll(txtCartList);
+                        cart.removeAll(cart);
+                        taItemlist.setText(Utils.createCartText(txtCartList));
+                        tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Codigo de membresia no encontrado", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
+                    }
+                    st.close();
+                    rs.close();
+                    Utils.disconnect();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

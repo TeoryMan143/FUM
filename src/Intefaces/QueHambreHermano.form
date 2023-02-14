@@ -409,7 +409,7 @@
               <text value="Ordene Su Pedido"/>
             </properties>
           </component>
-          <component id="956ab" class="javax.swing.JLabel">
+          <component id="956ab" class="javax.swing.JLabel" binding="lbCamp">
             <constraints>
               <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -453,18 +453,6 @@
               <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <component id="6df2d" class="javax.swing.JTextArea" binding="taItemlist">
-            <constraints>
-              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="2" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-                <maximum-size width="300" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <editable value="false"/>
-              <text value="Items En Lista"/>
-            </properties>
-          </component>
           <component id="ef659" class="javax.swing.JButton" binding="btVolver">
             <constraints>
               <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="10" fill="0" indent="0" use-parent-layout="false"/>
@@ -500,7 +488,7 @@
               <toolTipText value="Precio total"/>
             </properties>
           </component>
-          <component id="f135c" class="javax.swing.JCheckBox" binding="efectivoCheckBox" default-binding="true">
+          <component id="f135c" class="javax.swing.JCheckBox" binding="cbEfect">
             <constraints>
               <grid row="6" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -514,8 +502,28 @@
                 <preferred-size width="150" height="-1"/>
               </grid>
             </constraints>
-            <properties/>
+            <properties>
+              <visible value="false"/>
+            </properties>
           </component>
+          <scrollpane id="69afa">
+            <constraints>
+              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="2" indent="0" use-parent-layout="false">
+                <preferred-size width="124" height="123"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="6df2d" class="javax.swing.JTextArea" binding="taItemlist">
+                <constraints/>
+                <properties>
+                  <editable value="false"/>
+                  <text value="Items En Lista"/>
+                </properties>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>

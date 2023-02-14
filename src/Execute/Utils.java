@@ -69,7 +69,7 @@ public class Utils {
     public static String createCartText(ArrayList<String> list) {
         StringBuilder sb = new StringBuilder();
         for (String s : list) {
-            sb.append(s).append(" ");
+            sb.append(s).append("\n");
         }
         return sb.toString().trim();
     }
