@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UI {
+    public static Member loggedMember = null;
     public static void openMainPage() {
         new MainPage();
     }
@@ -20,6 +21,11 @@ public class UI {
     }
     public static void openServices() {
         new Services();
+        UI.loggedMember = null;
+    }
+    public static void openServices(Member member) {
+        new Services();
+        loggedMember = member;
     }
     public static void openQueHambre() {
         new QueHambreHermano();
@@ -29,7 +35,7 @@ public class UI {
     }
     public static void openQuienesSomos() {
         new QuienesSomos();
-    };
+    }
     public static void openEmpManagement() {
         new EmpManagement();
     }

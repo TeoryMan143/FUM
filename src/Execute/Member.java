@@ -3,8 +3,8 @@ package Execute;
 public class Member {
     private String email;
     private String uCode;
-    private double funds;
-    public Member(String email, String uCode, double funds) {
+    private long funds;
+    public Member(String email, String uCode, long funds) {
         this.email = email;
         this.uCode = uCode;
         this.funds = funds;
@@ -30,7 +30,16 @@ public class Member {
         return funds;
     }
 
-    public void setFunds(double funds) {
+    public void setFunds(long funds) {
         this.funds = funds;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "email='" + email + '\'' +
+                ", uCode='" + uCode + '\'' +
+                ", funds=" + funds +
+                '}';
     }
 }

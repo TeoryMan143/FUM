@@ -66,8 +66,8 @@ public class Chargemember extends JFrame{
             Statement st = Utils.connect().createStatement();
             ResultSet rs = st.executeQuery("select * from members where u_code = '" + uCode + "'");
             if (rs.next()) {
-                double originFunds = Double.parseDouble(rs.getString("funds"));
-                double f_funds = originFunds + Double.parseDouble(funds);
+                long originFunds = rs.getLong("funds");
+                long f_funds = originFunds + Long.parseLong(funds);
                 PreparedStatement pst = Utils.connect().prepareStatement("update members set funds = " + f_funds + " where u_code = '" + uCode + "'");
 
                 int addedRows = pst.executeUpdate();

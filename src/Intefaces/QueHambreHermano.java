@@ -1,5 +1,6 @@
 package Intefaces;
 
+import Execute.Member;
 import Execute.UI;
 import Execute.Utils;
 
@@ -99,6 +100,11 @@ public class QueHambreHermano extends JFrame {
             taItemlist.setText(txtCart);
             tfTotalP.setText(String.valueOf(Utils.addArrayList(cart)));
         });
+
+        if (UI.loggedMember != null) {
+            Member member = UI.loggedMember;
+            tfMember.setText(member.getuCode());
+        }
 
         btOrder.addActionListener(e -> loadFunds());
     }

@@ -1,5 +1,6 @@
 package Intefaces;
 
+import Execute.Member;
 import Execute.UI;
 import Execute.Utils;
 
@@ -11,18 +12,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Tarifas extends JFrame{
+public class Tarifas extends JFrame {
     private JTextField tfMemberLogin;
     private JButton btGetMember;
     private JButton btCharge;
     private JButton btMemberLogin;
     private JButton btVolver;
     private JPanel pnMain;
+    public Member member;
 
     public Tarifas() {
         setTitle("FUM diviertete como quieras");
         setContentPane(pnMain);
-        setBounds(0,0, 600, 700); // dimensiones iniciales
+        setBounds(0, 0, 600, 700); // dimensiones iniciales
         setMinimumSize(new Dimension(600, 700)); // dimensiones minimas
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -62,6 +64,18 @@ public class Tarifas extends JFrame{
             return;
         }
 
+        member = findMemberInDB(uCode);
+
+        if (member != null) {
+            JOptionPane.showMessageDialog(this, "Ha ingresado satisfactoriamente\n" +
+                    "Correo registrado: " + member.getEmail() + "\n" +
+                    "Saldo: " + member.getFunds(), "Registro", JOptionPane.INFORMATION_MESSAGE);
+            UI.openServices(member);
+            dispose();
+        }
+    }
+
+    private Member findMemberInDB(String uCode) {
         try {
             Statement st = Utils.connect().createStatement();
             ResultSet rs = st.executeQuery("select * from members where u_code = '" + uCode + "'");
@@ -69,11 +83,7 @@ public class Tarifas extends JFrame{
             if (rs.next()) {
                 String email = rs.getString("email");
                 String funds = rs.getString("funds");
-                JOptionPane.showMessageDialog(this, "Ha ingresado satisfactoriamente\n" +
-                        "Correo registrado: " + email + "\n" +
-                        "Saldo: " + funds, "Registro", JOptionPane.INFORMATION_MESSAGE);
-                UI.openServices();
-                dispose();
+                return new Member(email, uCode, Long.parseLong(funds));
             } else {
                 JOptionPane.showMessageDialog(this, "El codigo de membresia ingresado no existe", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
             }
@@ -84,5 +94,6 @@ public class Tarifas extends JFrame{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

@@ -87,7 +87,7 @@ public class Getmember extends JFrame {
                 String uCode = Utils.codeGenerator();
                 pst.setString(2, uCode);
 
-                double purchase;
+                int purchase;
                 String metype;
                 if (Objects.requireNonNull(cbMember.getSelectedItem()).toString().equals("Pase especial anual")) {
                     purchase = 50000;
@@ -103,7 +103,7 @@ public class Getmember extends JFrame {
                     metype = "Pase tercera edad";
                 }
 
-                double f_funds = Double.parseDouble(funds) - purchase;
+                long f_funds = Long.parseLong(funds) - purchase;
                 if (f_funds < 0) {
                     JOptionPane.showMessageDialog(this, "Fondos insuficientes", "Intenta otra vez", JOptionPane.ERROR_MESSAGE);
                 }
